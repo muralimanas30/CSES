@@ -1,5 +1,3 @@
-package current;
-
 import java.util.*;
 
 public class DiceCombinations {
