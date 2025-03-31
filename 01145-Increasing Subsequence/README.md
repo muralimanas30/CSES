@@ -6,29 +6,22 @@
 ---
 
 ## 💡 **Problem Explanation**
-You are given an array containing n integers. Your task is to determine the longest increasing subsequence in the array, i.e., the longest subsequence where every element is larger than the previous one.
+You are given an array containing \(n\) integers. Your task is to determine the longest increasing subsequence in the array, i.e., the longest subsequence where every element is larger than the previous one.
 
 A subsequence is a sequence that can be derived from the array by deleting some elements without changing the order of the remaining elements.
 
-Input
+The first line contains an integer \(n\): the size of the array.
 
-The first line contains an integer n: the size of the array.
-
-After this there are n integers x_1,x_2,…,x_n: the contents of the array.
-
-Output
+After this there are \(n\) integers \(x_1,x_2,\ldots,x_n\): the contents of the array.
 
 Print the length of the longest increasing subsequence.
 
 ## 📊 **Algorithm**
-
-*   Initialize an ArrayList `req` to store the elements of the increasing subsequence.
-*   Add the first element of the input array `arr` to `req`.
-*   Iterate through the remaining elements of `arr` from the second element.
+*   Initialize an empty list `req` to store the elements of the increasing subsequence.
+*   Iterate through the input array `arr`.
 *   If the current element `arr[i]` is greater than the last element of `req`, append `arr[i]` to `req`.
-*   Otherwise, perform a binary search on `req` to find the smallest element greater than or equal to `arr[i]`.
-*   Replace that element in `req` with `arr[i]`.
-*   Finally, the size of `req` represents the length of the longest increasing subsequence.
+*   Otherwise, use binary search to find the smallest element in `req` that is greater than or equal to `arr[i]` and replace it with `arr[i]`.  This ensures that `req` always maintains an increasing order and its length represents the longest increasing subsequence seen so far.
+*   After iterating through the entire input array, the size of `req` will be the length of the longest increasing subsequence.
 
 ## 🔥 **Code Implementation**
 ```java
@@ -61,11 +54,10 @@ public class IncreasingSubsequence {
         System.out.println(req.size());
     }
 }
-
 ```
 
 ## 🚀 **Time & Space Complexity**
 
-*   **Time Complexity:** The algorithm iterates through the input array once (O(n)). Inside the loop, a binary search is performed on the `req` ArrayList (O(log n)). Therefore, the overall time complexity is **O(n log n)**.
+*   **Time Complexity:**  **O(n log n)**, where _n_ is the size of the input array. This is due to the `Collections.binarySearch` operation within the loop, which takes O(log n) time and is performed n times.
 
-*   **Space Complexity:** The `req` ArrayList stores the elements of the increasing subsequence. In the worst-case scenario, the increasing subsequence can be as long as the input array. Therefore, the space complexity is **O(n)**.
+*   **Space Complexity:** **O(n)**, where _n_ is the size of the input array.  In the worst-case scenario (e.g., a strictly increasing input array), the `req` list will store all _n_ elements.
