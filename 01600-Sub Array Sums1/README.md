@@ -6,64 +6,52 @@
 ---
 
 ## 💡 **Problem Explanation**
-
-Given an array of $n$ positive integers, find the number of subarrays whose sum equals a given target value $x$.
+Given an array of $n$ integers, find the number of subarrays whose sum equals a given target value $x$.
 
 ## 📊 **Algorithm**
-
-This problem can be efficiently solved using the two-pointer (sliding window) technique. Here's the algorithm:
-
-*   Initialize two pointers, `left` and `right`, to 0.
-*   Initialize a variable `currSum` to 0, representing the current sum of the subarray from `left` to `right`.
-*   Initialize a variable `count` to 0, representing the number of subarrays with sum equal to $x$.
-*   Iterate the `right` pointer from 0 to $n-1$:
-    *   Add the element at the `right` index to `currSum`.
-    *   While `currSum` is greater than the target value $x$ and `left` is less than or equal to `right`:
-        *   Subtract the element at the `left` index from `currSum`.
-        *   Increment the `left` pointer.
-    *   If `currSum` is equal to the target value $x$, increment the `count`.
-*   Return the `count`.
+1.  Initialize a `currSum` variable to 0, `left` pointer to 0, and `count` to 0.
+2.  Iterate through the array using a `right` pointer.
+3.  Add the current element `arr[right]` to `currSum`.
+4.  While `currSum` is greater than the `target` and `left` is less than or equal to `right`:
+    *   Subtract `arr[left]` from `currSum` and increment `left`.
+5.  If `currSum` is equal to the `target`, increment `count`.
+6.  Return the final `count`.
 
 ## 🔥 **Code Implementation**
-
 ```java
 import java.util.*;
 
 public class SubarraySums1 {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
-        long x = scanner.nextLong();
-        int[] arr = new int[n];
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        long target = scan.nextLong();
+        long[] arr = new long[n];
 
         for (int i = 0; i < n; i++) {
-            arr[i] = scanner.nextInt();
+            arr[i] = scan.nextLong();
         }
 
-        int left = 0;
         long currSum = 0;
-        int count = 0;
+        int left = 0, count = 0;
 
         for (int right = 0; right < n; right++) {
             currSum += arr[right];
 
-            while (currSum > x && left <= right) {
-                currSum -= arr[left];
-                left++;
+            while (currSum > target && left <= right) {
+                currSum -= arr[left++];
             }
 
-            if (currSum == x) {
+            if (currSum == target) {
                 count++;
             }
         }
 
         System.out.println(count);
-        scanner.close();
     }
 }
 ```
 
 ## 🚀 **Time & Space Complexity**
-
-*   **Time Complexity:** $O(n)$, because both `left` and `right` pointers iterate through the array at most once.
-*   **Space Complexity:** $O(1)$, as we are only using a few constant space variables. The input array `arr` is already given, so it's not considered extra space used by the algorithm.
+The time complexity is **O(n)** because we are iterating through the array once with the `right` pointer, and the `left` pointer also moves from left to right at most once. Therefore, each element is visited at most twice.
+The space complexity is **O(1)** because we are only using a few extra variables that take up constant space, regardless of the input size. The `arr` takes O(n) but that is for the given input and not for extra space.
