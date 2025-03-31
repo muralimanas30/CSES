@@ -1,8 +1,8 @@
 ## 📝 **CSES Problem**
 
-| 🔢 Problem Number | 📌 Title                 | 🔗 Link                                           |
-| ------------------ | ----------------------- | ------------------------------------------------- |
-| 1660               | Subarray Sums I | [CSES Problem](https://cses.fi/problemset/task/1660) |
+| 🔢 Problem Number | 📌 Title               | 🔗 Link                                      |
+| ------------------ | --------------------- | -------------------------------------------- |
+| 1660               | Subarray Sums I       | [CSES Problem](https://cses.fi/problemset/task/1660) |
 
 ## 💡 **Problem Explanation**
 
@@ -10,51 +10,58 @@ Given an array of $n$ positive integers, find the number of subarrays whose sum 
 
 ## 📊 **Algorithm**
 
-*   Initialize a sliding window with `left = 0`, `right = 0`, and `currSum = 0`.
-*   Iterate through the array using the `right` pointer to expand the window.
-*   Add the current element `arr[right]` to `currSum`.
-*   While `currSum` is greater than the `target` and `left <= right`, shrink the window by incrementing the `left` pointer and subtracting `arr[left]` from `currSum`.
-*   If `currSum` equals the `target`, increment the `count`.
-*   Repeat until the `right` pointer reaches the end of the array.
+*   Initialize two pointers, `left` and `right`, to 0.
+*   Initialize a variable `currSum` to 0 to store the current sum of the subarray.
+*   Initialize a variable `count` to 0 to store the number of subarrays with sum equal to the target.
+*   Iterate through the array using the `right` pointer:
+    *   Add the current element `arr[right]` to `currSum`.
+    *   While `currSum` is greater than the target value `x` and `left` is less than or equal to `right`:
+        *   Subtract the element at the `left` pointer `arr[left]` from `currSum`.
+        *   Increment the `left` pointer.
+    *   If `currSum` is equal to the target value `x`:
+        *   Increment the `count`.
+*   Return the `count`.
 
 ## 🔥 **Code Implementation**
 
 ```java
 import java.util.*;
 
-public class SubArraySums1 {
+public class SubarraySumsI {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        int n = scan.nextInt();
-        long target = scan.nextLong();
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        long x = scanner.nextLong();
         long[] arr = new long[n];
 
         for (int i = 0; i < n; i++) {
-            arr[i] = scan.nextLong();
+            arr[i] = scanner.nextLong();
         }
 
+        int left = 0;
         long currSum = 0;
-        int left = 0, count = 0;
+        int count = 0;
 
         for (int right = 0; right < n; right++) {
             currSum += arr[right];
 
-            while (currSum > target && left <= right) {
-                currSum -= arr[left++];
+            while (currSum > x && left <= right) {
+                currSum -= arr[left];
+                left++;
             }
 
-            if (currSum == target) {
+            if (currSum == x) {
                 count++;
             }
         }
 
         System.out.println(count);
+        scanner.close();
     }
 }
 ```
 
 ## 🚀 **Time & Space Complexity**
 
-*   **Time Complexity:** $O(n)$, where $n$ is the number of elements in the array. The `left` and `right` pointers each move at most $n$ times.
-*   **Space Complexity:** $O(1)$, as we only use a constant amount of extra space for variables.
-
+*   **Time Complexity:** $O(n)$, because each element in the array is visited at most twice by the `left` and `right` pointers.
+*   **Space Complexity:** $O(1)$, because only a fixed number of variables are used, regardless of the input size. The `arr` array occupies $O(n)$ space, but it is considered input space, not auxiliary space.
