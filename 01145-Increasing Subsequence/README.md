@@ -10,24 +10,13 @@ You are given an array containing \(n\) integers. Your task is to determine the 
 
 A subsequence is a sequence that can be derived from the array by deleting some elements without changing the order of the remaining elements.
 
-**Input**
-
-The first line contains an integer \(n\): the size of the array.
-
-After this there are \(n\) integers \(x_1,x_2,\ldots,x_n\): the contents of the array.
-
-**Output**
-
-Print the length of the longest increasing subsequence.
-
 ## 📊 **Algorithm**
-*   Initialize an empty `ArrayList` called `req` to store the increasing subsequence.
-*   Add the first element of the input array `arr` to `req`.
-*   Iterate through the remaining elements of `arr` from the second element.
-    *   If the current element `arr[i]` is greater than the last element of `req`, add `arr[i]` to the end of `req`.
-    *   Otherwise, use binary search to find the smallest element in `req` that is greater than or equal to `arr[i]` and replace it with `arr[i]`.
-*   After iterating through all elements of `arr`, the size of `req` will be the length of the longest increasing subsequence.
-*   Print the size of `req`.
+
+*   Initialize an empty ArrayList `req` to store the increasing subsequence found so far.
+*   Iterate through the input array `arr` from left to right.
+*   If the current element `arr[i]` is greater than the last element of `req`, it extends the longest increasing subsequence found so far. Therefore, append `arr[i]` to `req`.
+*   Otherwise, find the smallest element in `req` that is greater than or equal to `arr[i]` using binary search.  Replace that element with `arr[i]`. This ensures that `req` always maintains an increasing order and stores the smallest end elements for subsequences of different lengths.
+*   After iterating through the entire input array, the size of `req` is the length of the longest increasing subsequence.
 
 ## 🔥 **Code Implementation**
 ```java
@@ -65,6 +54,5 @@ public class IncreasingSubsequence {
 
 ## 🚀 **Time & Space Complexity**
 
-*   **Time Complexity:** **O(n log n)**, where n is the size of the input array. This is because the algorithm iterates through the array once (O(n)), and in each iteration, it performs a binary search on the `ArrayList` `req` (O(log n)).
-
-*   **Space Complexity:** **O(n)** in the worst case, where n is the size of the input array. This is because the `ArrayList` `req` can potentially store all elements of the input array if the array is strictly increasing.
+*   **Time Complexity:** The outer loop iterates through the array of size \(n\), and inside the loop, `Collections.binarySearch` takes \(O(\log n)\) time. Therefore, the overall time complexity is **\(O(n \log n)\)**.
+*   **Space Complexity:** The `req` ArrayList stores the increasing subsequence. In the worst-case scenario (when the input array is already sorted in increasing order), `req` will store all \(n\) elements. Therefore, the space complexity is **\(O(n)\)**.
