@@ -6,47 +6,44 @@
 ---
 
 ## 💡 **Problem Explanation**
-Your task is to count the number of ways to construct sum *n* by throwing a dice one or more times. Each throw produces an outcome between 1 and 6.
+Your task is to count the number of ways to construct sum n by throwing a dice one or more times. Each throw produces an outcome between 1 and 6.
 
-For example, if *n*=3, there are 4 ways:
+For example, if n=3, there are 4 ways:
 
-*   1+1+1
-*   1+2
-*   2+1
-*   3
+1+1+1
+1+2
+2+1
+3
 
-**Input**
+Input
 
-The only input line has an integer *n*.
+The only input line has an integer n.
 
-**Output**
+Output
 
 Print the number of ways modulo 10^9+7.
 
-**Constraints**
+Constraints
 
-*   1 ≤ *n* ≤ 10^6
+1 \le n \le 10^6
 
-**Example**
+Example
 
 Input:
 
-```
 3
-```
 
 Output:
 
-```
 4
-```
 
 ## 📊 **Algorithm**
-
-*   **Dynamic Programming Approach:** We use dynamic programming to solve this problem. We create an array `dp` of size *n+1* where `dp[i]` stores the number of ways to form the sum *i*.
-*   **Base Case:** `dp[0] = 1` because there is one way to form the sum 0 (i.e., no throws).
-*   **Iteration:** We iterate from 1 to *n*. For each *i*, we iterate from *i-6* to *i-1*. If *j* is a valid index (i.e., *j* >= 0), we add `dp[j]` to `dp[i]`. The logic behind this is: to reach sum *i*, we can reach it from sum *j* by throwing a dice with a value of *i - j* (which must be between 1 and 6).
-*   **Modulo:** We take the modulo of the result at each step to prevent overflow, as the number of ways can be very large.  Modulo value is 10^9 + 7.
+*   Initialize a DP array `dp` of size `n+1`, where `dp[i]` represents the number of ways to form the sum `i`.
+*   The base case is `dp[0] = 1`, as there's one way to form a sum of 0 (doing nothing).
+*   Iterate from `i = 1` to `n`:
+    *   For each `i`, iterate from `j = max(0, i-6)` to `i-1`:
+        *   `dp[i] = (dp[i] + dp[j]) % mod`, where `mod = 10^9 + 7`. This adds the number of ways to reach sum `j` to the number of ways to reach sum `i`.  We are adding `dp[j]` because if we are at the sum `j`, we can roll a dice with value `i - j` to reach the sum `i`. `i - j` will always be between 1 and 6 because `j` varies between `max(0, i - 6)` and `i - 1`.
+*   Finally, `dp[n]` will contain the total number of ways to form sum `n`.
 
 ## 🔥 **Code Implementation**
 ```java
@@ -72,6 +69,6 @@ public class DiceCombinations {
 ```
 
 ## 🚀 **Time & Space Complexity**
+The **time complexity** of this solution is **O(n)** due to the nested loops where the outer loop iterates from 1 to `n` and the inner loop iterates a maximum of 6 times for each `i`.  Thus the overall run time is 6\*n which simplifies to O(n).
 
-*   **Time Complexity:** **O(n)** because we have a nested loop, but the inner loop always iterates a maximum of 6 times regardless of *n*, effectively making it constant time.
-*   **Space Complexity:** **O(n)** because we use a `dp` array of size *n+1*.
+The **space complexity** of this solution is **O(n)** because we use a DP array `dp` of size `n+1` to store the intermediate results.
